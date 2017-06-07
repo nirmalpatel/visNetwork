@@ -77,7 +77,9 @@ visIgraphLayout <- function(graph,
                             smooth = FALSE,
                             type = "square", 
                             randomSeed = NULL, 
-                            layoutMatrix = NULL, ...){
+                            layoutMatrix = NULL,
+                            scale = 1,
+                            ...){
   
   if(any(class(graph) %in% "visNetwork_Proxy")){
     stop("Can't use visIgraphLayout with visNetworkProxy object")
@@ -128,7 +130,7 @@ visIgraphLayout <- function(graph,
   graph$x$nodes$x <- coord[, 1]
   graph$x$nodes$y <- coord[, 2]
   
-  to <- c(-1, 1)
+  to <- c(-1, 1) * scale
   from <- range(graph$x$nodes$x, na.rm = TRUE, finite = TRUE)
   graph$x$nodes$x <- (graph$x$nodes$x - from[1])/diff(from) * diff(to) + to[1]
   
