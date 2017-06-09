@@ -78,7 +78,8 @@ visIgraphLayout <- function(graph,
                             type = "square", 
                             randomSeed = NULL, 
                             layoutMatrix = NULL,
-                            scale = 1,
+                            hscale = 1,
+                            vscale = 1,
                             ...){
   
   if(any(class(graph) %in% "visNetwork_Proxy")){
@@ -130,12 +131,14 @@ visIgraphLayout <- function(graph,
   graph$x$nodes$x <- coord[, 1]
   graph$x$nodes$y <- coord[, 2]
   
-  to <- c(-1, 1) * scale
+  xto <- c(-1, 1) * hscale
+  yto <- c(-1, 1) * vscale
+  
   from <- range(graph$x$nodes$x, na.rm = TRUE, finite = TRUE)
-  graph$x$nodes$x <- (graph$x$nodes$x - from[1])/diff(from) * diff(to) + to[1]
+  graph$x$nodes$x <- (graph$x$nodes$x - from[1])/diff(from) * diff(xto) + xto[1]
   
   from <- range(graph$x$nodes$y, na.rm = TRUE, finite = TRUE)
-  graph$x$nodes$y <- (graph$x$nodes$y - from[1])/diff(from) * diff(to) + to[1]
+  graph$x$nodes$y <- (graph$x$nodes$y - from[1])/diff(from) * diff(yto) + yto[1]
   
   graph$x$igraphlayout <- igraphlayout
   
